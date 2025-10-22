@@ -1,0 +1,31 @@
+<!DOCTYPE swiftui+vml>
+<vml lang="en">
+  <head>
+  </head>
+  <body>
+      <text>Hello, world!</text>
+      <hstack>
+        <button id="increase-btn">Increase</button>
+        <text id="counter">0</text>
+        <button id="decrease-btn">Decrease</button>
+      </hstack>
+  </body>
+  <script>
+    // document.getElementById('increase-btn').onclick = () => {
+    //   const counter = document.getElementById('counter');
+    //   counter.innerText = parseInt(counter.innerText) + 1;
+    // };
+    // document.getElementById('decrease-btn').onclick = () => {
+    //   const counter = document.getElementById('counter');
+    //   counter.innerText = parseInt(counter.innerText) - 1;
+    // };
+    document.getElementById('increase-btn').addEventListener('click', () => {
+      const counter = document.getElementById('counter');
+      counter.innerText = parseInt(counter.innerText) + 1;
+    });
+    document.getElementById('decrease-btn').addEventListener('click', () => {
+      const counter = document.getElementById('counter');
+      counter.innerText = parseInt(counter.innerText) - 1;
+    });
+  </script>
+</vml>
