@@ -11,8 +11,11 @@
 </script>
 
   
-<hstack>
-  <button onclick={decrement}>Decrement</button>
-  <text>{count}</text>
-  <button onclick={increment}>Increment</button>
-</hstack>
+<vstack spacing="4" align="center" justify="center" style="height: 100vh;">
+  <text>Vite + Svelte native IOS</text>
+  <hstack>
+    <button onclick={decrement}>Decrement</button>
+    <text>{count}</text>
+    <button onclick={increment}>Increment</button>
+  </hstack>
+</vstack>
