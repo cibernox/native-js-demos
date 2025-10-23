@@ -1,0 +1,33 @@
+<!DOCTYPE swiftui+vml>
+<vml lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Svelte + Vite App</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+    
+    <text>Non-svelte example</text>
+    <hstack>
+      <button id="decrease-btn">Decrease</button>
+      <text id="counter">0</text>
+      <button id="increase-btn">Increase</button>
+    </hstack>
+    
+    <script>
+      document.getElementById('increase-btn').addEventListener('click', () => {
+        const counter = document.getElementById('counter');
+        console.log('### Incrementing counter in non-svelte code');
+        counter.innerText = parseInt(counter.innerText) + 1;
+      });
+      document.getElementById('decrease-btn').addEventListener('click', () => {
+        const counter = document.getElementById('counter');
+        console.log('### Decrementing counter in non-svelte code');
+        counter.innerText = parseInt(counter.innerText) - 1;
+      });
+    </script>
+  </body>
+</vml>
