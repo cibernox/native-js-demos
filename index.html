@@ -4,6 +4,7 @@
   </head>
   <body>
       <text>Hello, world!</text>
+      <!-- <input id="text-input"type="text" placeholder="Type something..." /> -->
       <hstack>
         <button id="increase-btn">Increase</button>
         <text id="counter">0</text>
@@ -27,5 +28,11 @@
       const counter = document.getElementById('counter');
       counter.innerText = parseInt(counter.innerText) - 1;
     });
+    // document.getElementById('text-input').addEventListener('input', () => {
+    //   console.log('Input event triggered');
+    // });
+    // document.getElementById('text-input').addEventListener('change', () => {
+    //   console.log('Change event triggered');
+    // });
   </script>
 </vml>
