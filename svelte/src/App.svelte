@@ -7,14 +7,14 @@
     { id: 4, text: 'Profit?', completed: false },
   ]);
   
-  const nextId = $derived(() => todos.length + 1);
+  const nextId = $derived(todos.length + 1);
   const remainingCount = $derived(todos.filter(t => !t.completed).length);
   const totalCount = $derived(todos.length);
 
   function addTodo() {
     const newTodo = newTodoInput.value;
     if (newTodo.trim()) {
-      todos.push({ id: nextId + 1, text: newTodo.trim(), completed: false });
+      todos.push({ id: nextId, text: newTodo.trim(), completed: false });
       newTodoInput.value = '';
     }
   }
@@ -38,9 +38,9 @@
   <text style="font(.largeTitle); fontWeight(.bold); padding(.bottom, 20);">Todo List</text>
   
   <hstack style="padding(.bottom, 20);">
-    <!-- <input bind:value={newTodo} placeholder="Add a new todo..." style="flex(1); padding(8); border(1, .gray); cornerRadius(8);" /> -->
-    <!-- <textfield bind:this={newTodoInput} placeholder="Add a new todo..." style="flex(1); padding(8); border(1, .gray); cornerRadius(8);">Fill in the text field</textfield> -->
-    <textfield text="adsassdasd" style="flex(1); padding(8); border(1, .gray); cornerRadius(8);">Add a new todo...</textfield>
+    <!-- <input bind:this={newTodoInput} placeholder="Add a new todo..." style="flex(1); padding(8); border(1, .gray); cornerRadius(8);" /> -->
+    <textfield bind:this={newTodoInput} placeholder="Add a new todo..." style="flex(1); padding(8); border(1, .gray); cornerRadius(8);">Fill in the text field</textfield>
+    <!-- <textfield text="adsassdasd" style="flex(1); padding(8); border(1, .gray); cornerRadius(8);">Add a new todo...</textfield> -->
     <button onclick={addTodo} style="padding(8, 16); background(.blue); foregroundColor(.white); cornerRadius(8); marginLeading(8);">Add</button>
   </hstack>
 
