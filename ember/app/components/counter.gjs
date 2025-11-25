@@ -17,15 +17,12 @@ export default class CounterComponent extends Component {
   }
 
   <template>
-    <text>before vstack</text>
     <vstack>
-      <text>Ember.js Counter Demo</text>
       <hstack>
-        {{!-- <button {{on "click" this.decrement}}>Decrement</button> --}}
+        <button {{on "click" this.decrement}}>Decrement</button>
         <text>{{this.count}}</text>
-        {{!-- <button {{on "click" this.increment}}>Increment</button> --}}
+        <button {{on "click" this.increment}}>Increment</button>
       </hstack>
-      <text>Ember.js Counter Demo after</text>
     </vstack>
   </template>
 }
