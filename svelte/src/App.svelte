@@ -34,7 +34,6 @@
   }
 
   function handleKeypress(event) {
-    debugger;
     if (event.key === 'Enter') {
       addTodo();
     }
@@ -45,8 +44,12 @@
   <text modifiers="font(.largeTitle); fontWeight(.bold); padding(.bottom, 20);">Todo List</text>
   
   <hstack modifiers="padding(.bottom, 20);">
-    <!-- <input bind:this={newTodoInput} placeholder="Add a new todo..." modifiers="flex(1); padding(8); border(1, .gray); cornerRadius(8);" /> -->
-    <textfield bind:this={newTodoInput} placeholder="Add a new todo..." modifiers="flex(1); padding(8); border(1, .gray); cornerRadius(8);" onkeypress={handleKeypress}>Fill in the text field</textfield>
+    <textfield 
+    bind:this={newTodoInput} placeholder="Add a new todo..." 
+    modifiers="flex(1); padding(8); border(1, .gray); cornerRadius(8);" 
+    onkeypress={handleKeypress}>
+    Fill in the text field
+  </textfield>
     <button onclick={addTodo} modifiers="buttonStyle(.borderedProminent)">Add</button>
   </hstack>
 
@@ -55,13 +58,14 @@
       <hstack modifiers="padding(.horizontal,12); background(.gray.opacity(0.1)); cornerRadius(8);">
         <text modifiers="flex(1); multilineTextAlignment(.leading); {todo.completed ? 'strikethrough(true, .dash, .red);' : ''}">{todo.text}</text>
         <spacer/>
-        <!-- {todo.text} -->
-        <!-- <button onclick={() => toggleComplete(todo.id)} modifiers="padding(4, 8); background({todo.completed ? '.green' : '.orange'}); foregroundColor(.white); cornerRadius(4); marginTrailing(4);"> -->
         <button onclick={() => toggleComplete(todo.id)} modifiers="buttonStyle(.bordered);tint({todo.completed ? '.orange' : '.green'})">
-          {todo.completed ? 'Undo' : 'Done'}
+          {#if todo.completed}
+            <image systemName="arrow.uturn.backward" />
+          {:else}
+            <image systemName="checkmark.circle.fill" />
+          {/if}
         </button>
-        <button role=".destructive" onclick={() => removeTodo(todo.id)} modifiers="buttonStyle(.bordered);tint(.red)">Remove</button>
-        <!-- <button role=".destructive" onclick={() => removeTodo(todo.id)} modifiers="background(.regularMaterial); clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))">Remove</button> -->
+        <button role=".destructive" onclick={() => removeTodo(todo.id)} modifiers="buttonStyle(.bordered);tint(.red)"><image systemName="trash.fill" /></button>
       </hstack>
     {/each}
   </vstack>
