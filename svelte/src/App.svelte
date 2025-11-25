@@ -41,7 +41,7 @@
 </script>
 
 <vstack modifiers="padding(20); height: 100vh;">
-  <text modifiers="font(.largeTitle); fontWeight(.bold); padding(.bottom, 20);">Todo List</text>
+  <text modifiers="font(.largeTitle.bold()); padding(.bottom, 20);">Todo List</text>
   
   <hstack modifiers="padding(.bottom, 20);">
     <textfield 
@@ -56,7 +56,7 @@
   <vstack modifiers="multilineTextAlignment(.leading); spacing(8);">
     {#each todos as todo (todo.id)}
       <hstack modifiers="padding(.horizontal,12); background(.gray.opacity(0.1)); cornerRadius(8);">
-        <text modifiers="flex(1); multilineTextAlignment(.leading); {todo.completed ? 'strikethrough(true, .dash, .red);' : ''}">{todo.text}</text>
+        <text modifiers="flex(1); multilineTextAlignment(.leading); {todo.completed ? 'strikethrough(true, .dash, color: .red);' : ''}">{todo.text}</text>
         <spacer/>
         <button onclick={() => toggleComplete(todo.id)} modifiers="buttonStyle(.bordered);tint({todo.completed ? '.orange' : '.green'})">
           {#if todo.completed}
