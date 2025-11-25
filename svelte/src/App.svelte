@@ -32,31 +32,41 @@
       todos.splice(index, 1);
     }
   }
+
+  function handleKeypress(event) {
+    debugger;
+    if (event.key === 'Enter') {
+      addTodo();
+    }
+  }
 </script>
 
-<vstack style="padding(20); height: 100vh;">
-  <text style="font(.largeTitle); fontWeight(.bold); padding(.bottom, 20);">Todo List</text>
+<vstack modifiers="padding(20); height: 100vh;">
+  <text modifiers="font(.largeTitle); fontWeight(.bold); padding(.bottom, 20);">Todo List</text>
   
-  <hstack style="padding(.bottom, 20);">
-    <!-- <input bind:this={newTodoInput} placeholder="Add a new todo..." style="flex(1); padding(8); border(1, .gray); cornerRadius(8);" /> -->
-    <textfield bind:this={newTodoInput} placeholder="Add a new todo..." style="flex(1); padding(8); border(1, .gray); cornerRadius(8);">Fill in the text field</textfield>
-    <!-- <textfield text="adsassdasd" style="flex(1); padding(8); border(1, .gray); cornerRadius(8);">Add a new todo...</textfield> -->
-    <button onclick={addTodo} style="padding(8, 16); background(.blue); foregroundColor(.white); cornerRadius(8); marginLeading(8);">Add</button>
+  <hstack modifiers="padding(.bottom, 20);">
+    <!-- <input bind:this={newTodoInput} placeholder="Add a new todo..." modifiers="flex(1); padding(8); border(1, .gray); cornerRadius(8);" /> -->
+    <textfield bind:this={newTodoInput} placeholder="Add a new todo..." modifiers="flex(1); padding(8); border(1, .gray); cornerRadius(8);" onkeypress={handleKeypress}>Fill in the text field</textfield>
+    <button onclick={addTodo} modifiers="buttonStyle(.borderedProminent)">Add</button>
   </hstack>
 
-  <vstack style="alignment(.leading); spacing(8);">
+  <vstack modifiers="multilineTextAlignment(.leading); spacing(8);">
     {#each todos as todo (todo.id)}
-      <hstack style="padding(12); background(.gray.opacity(0.1)); cornerRadius(8); alignment(.center);">
-        <text style="flex(1); {todo.completed ? 'strikethrough(true, .red);' : ''}">{todo.text}</text>
-        <button onclick={() => toggleComplete(todo.id)} style="padding(4, 8); background({todo.completed ? '.green' : '.orange'}); foregroundColor(.white); cornerRadius(4); marginTrailing(4);">
+      <hstack modifiers="padding(.horizontal,12); background(.gray.opacity(0.1)); cornerRadius(8);">
+        <text modifiers="flex(1); multilineTextAlignment(.leading); {todo.completed ? 'strikethrough(true, .dash, .red);' : ''}">{todo.text}</text>
+        <spacer/>
+        <!-- {todo.text} -->
+        <!-- <button onclick={() => toggleComplete(todo.id)} modifiers="padding(4, 8); background({todo.completed ? '.green' : '.orange'}); foregroundColor(.white); cornerRadius(4); marginTrailing(4);"> -->
+        <button onclick={() => toggleComplete(todo.id)} modifiers="buttonStyle(.bordered);tint({todo.completed ? '.orange' : '.green'})">
           {todo.completed ? 'Undo' : 'Done'}
         </button>
-        <button onclick={() => removeTodo(todo.id)} style="padding(4, 8); background(.red); foregroundColor(.white); cornerRadius(4);">Remove</button>
+        <button role=".destructive" onclick={() => removeTodo(todo.id)} modifiers="buttonStyle(.bordered);tint(.red)">Remove</button>
+        <!-- <button role=".destructive" onclick={() => removeTodo(todo.id)} modifiers="background(.regularMaterial); clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))">Remove</button> -->
       </hstack>
     {/each}
   </vstack>
 
-  <text style="padding(.top, 20); foregroundColor(.secondary);">
+  <text modifiers="padding(.top, 20); foregroundColor(.secondary);">
     {remainingCount} of {totalCount} remaining
   </text>
 </vstack>
