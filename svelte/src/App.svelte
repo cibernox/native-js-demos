@@ -40,7 +40,7 @@
   }
 </script>
 
-<vstack modifiers="padding(20); height: 100vh;">
+<vstack modifiers="padding(20);">
   <text modifiers="font(.largeTitle.bold()); padding(.bottom, 20);">Todo List</text>
   
   <hstack modifiers="padding(.bottom, 20);">
