@@ -1,0 +1,107 @@
+<script>
+  let newTodoTitleInput = $state();
+  let newTodoDescriptionInput = $state();
+  let todos = $state([
+    { id: 1, title: 'Learn Svelte', description: null, completed: false },
+    { id: 2, title: 'Build iOS app', description: null, completed: false },
+    { id: 3, title: 'Build iOS app using svelte', description: 'Cool, uh?', completed: false },
+    { id: 4, title: 'Profit?', description: null, completed: false },
+  ]);
+  
+  const nextId = $derived(todos.length + 1);
+  const remainingCount = $derived(todos.filter(t => !t.completed).length);
+  const totalCount = $derived(todos.length);
+
+  function addTodo() {
+    const title = newTodoTitleInput.value;
+    const description = newTodoDescriptionInput.value;
+    if (title.trim()) {
+      todos.push({ id: nextId, title: title.trim(), description: description.trim(), completed: false });
+      newTodoTitleInput.value = '';
+      newTodoDescriptionInput.value = '';
+    }
+  }
+
+  function toggleComplete(id) {
+    const todo = todos.find(t => t.id === id);
+    if (todo) {
+      todo.completed = !todo.completed;
+    }
+  }
+
+  function removeTodo(id) {
+    const index = todos.findIndex(t => t.id === id);
+    if (index !== -1) {
+      todos.splice(index, 1);
+    }
+  }
+</script>
+
+<vstack modifiers="padding(20);">
+  <text modifiers="font(.largeTitle.bold()); padding(.bottom, 20);">Todo List</text>
+  
+  <hstack modifiers="padding(.bottom, 20);">
+    <vstack>
+      <textfield 
+        bind:this={newTodoTitleInput} placeholder="Add a new todo..." 
+        modifiers="flex(1); padding(8); border(1, .gray); cornerRadius(8);">
+        Todo title
+      </textfield>
+      <textfield 
+        bind:this={newTodoDescriptionInput} placeholder="Add a new todo..." 
+        modifiers="flex(1); padding(8); border(1, .gray); cornerRadius(8);">
+        Todo description (optional)
+      </textfield>
+    </vstack>
+    <button onclick={addTodo} modifiers="buttonStyle(.borderedProminent)">Add</button>
+  </hstack> 
+
+  <list>
+    {#each todos as todo (todo.id)}
+      <hstack id={todo.id} modifiers="swipeActions(content: :swipe_actions)">
+        <group template="swipe_actions">
+          <button onclick={() => removeTodo(todo.id)} role=".destructive">
+            <image systemName="trash.fill" />
+        </group>
+        <label>
+          <image
+            template="icon"
+            systemName={todo.completed ? "checkmark.circle.fill" : "circle"}
+            modifiers="imageScale(.large)"
+          /> 
+          <hstack template="title">
+            <vstack
+              alignment="leading"
+              modifiers="frame(maxWidth: .infinity, alignment: .leading);"
+            >
+              <text>{todo.title}</text>
+              {#if todo.description}
+                <text style="foregroundStyle(.secondary); font(.caption);">{todo.description}</text>
+              {/if}
+          </vstack>
+          </hstack>                   
+        </label>
+      </hstack> 
+    {/each}
+  </list>
+  <!-- <vstack modifiers="multilineTextAlignment(.leading); spacing(8);">
+    {#each todos as todo (todo.id)}
+      <hstack modifiers="padding(.horizontal,12); background(.gray.opacity(0.1)); cornerRadius(8);">
+        <text modifiers="flex(1); multilineTextAlignment(.leading); {todo.completed ? 'strikethrough(true, .dash, color: .red);' : ''}">{todo.text}</text>
+        <spacer/>
+        <button onclick={() => toggleComplete(todo.id)} modifiers="buttonStyle(.bordered);tint({todo.completed ? '.orange' : '.green'})">
+          {#if todo.completed}
+            <image systemName="arrow.uturn.backward" />
+          {:else}
+            <image systemName="checkmark.circle.fill" />
+          {/if}
+        </button>
+        <button role=".destructive" onclick={() => removeTodo(todo.id)} modifiers="buttonStyle(.bordered);tint(.red)"><image systemName="trash.fill" /></button>
+      </hstack>
+    {/each}
+  </vstack> -->
+
+  <text modifiers="padding(.top, 20); foregroundColor(.secondary);">
+    {remainingCount} of {totalCount} remaining
+  </text>
+</vstack>
