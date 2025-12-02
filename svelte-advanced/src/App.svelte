@@ -58,11 +58,11 @@
 
   <list>
     {#each todos as todo (todo.id)}
-      <hstack id={todo.id} modifiers="swipeActions(content: :swipe_actions)">
-        <group template="swipe_actions">
-          <button onclick={() => removeTodo(todo.id)} role=".destructive">
-            <image systemName="trash.fill" />
-        </group>
+      <hstack id={todo.id} modifiers="swipeActions(edge: .trailing, allowsFullSwipe: true, content: trailingActions);">
+        <button template="trailingActions" role="destructive" onclick={() => removeTodo(todo.id)}>
+          <image systemName="trash" />
+        </button>
+
         <label>
           <image
             template="icon"
