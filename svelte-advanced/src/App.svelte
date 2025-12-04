@@ -45,7 +45,7 @@
 <vstack modifiers="padding(20);">
   <text modifiers="font(.largeTitle.bold()); padding(.bottom, 20);">Todo List</text>
   
-  <list modifiers=".safeAreaInset(edge: .top, content: form)">
+  <list modifiers=".safeAreaInset(edge: .top, content: todo_form)">
     <hstack template="todo_form">
       <vstack>
         <textfield 
