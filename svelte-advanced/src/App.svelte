@@ -62,44 +62,28 @@
         <button template="trailingActions" role="destructive" onclick={() => removeTodo(todo.id)}>
           <image systemName="trash" />
         </button>
-
         <label>
-          <image
-            template="icon"
-            systemName={todo.completed ? "checkmark.circle.fill" : "circle"}
-            modifiers="imageScale(.large)"
-          /> 
           <hstack template="title">
+            <button onclick={() => toggleComplete(todo.id)}>
+              <image
+                systemName={todo.completed ? "checkmark.circle.fill" : "circle"}
+                modifiers="imageScale(.large)"
+              /> 
+            </button>
             <vstack
               alignment="leading"
               modifiers="frame(maxWidth: .infinity, alignment: .leading);"
             >
               <text>{todo.title}</text>
               {#if todo.description}
-                <text style="foregroundStyle(.secondary); font(.caption);">{todo.description}</text>
+                <text modifiers="foregroundStyle(.secondary); font(.caption);">{todo.description}</text>
               {/if}
-          </vstack>
-          </hstack>                   
+            </vstack>
+          </hstack>
         </label>
       </hstack> 
     {/each}
   </list>
-  <!-- <vstack modifiers="multilineTextAlignment(.leading); spacing(8);">
-    {#each todos as todo (todo.id)}
-      <hstack modifiers="padding(.horizontal,12); background(.gray.opacity(0.1)); cornerRadius(8);">
-        <text modifiers="flex(1); multilineTextAlignment(.leading); {todo.completed ? 'strikethrough(true, .dash, color: .red);' : ''}">{todo.text}</text>
-        <spacer/>
-        <button onclick={() => toggleComplete(todo.id)} modifiers="buttonStyle(.bordered);tint({todo.completed ? '.orange' : '.green'})">
-          {#if todo.completed}
-            <image systemName="arrow.uturn.backward" />
-          {:else}
-            <image systemName="checkmark.circle.fill" />
-          {/if}
-        </button>
-        <button role=".destructive" onclick={() => removeTodo(todo.id)} modifiers="buttonStyle(.bordered);tint(.red)"><image systemName="trash.fill" /></button>
-      </hstack>
-    {/each}
-  </vstack> -->
 
   <text modifiers="padding(.top, 20); foregroundColor(.secondary);">
     {remainingCount} of {totalCount} remaining
