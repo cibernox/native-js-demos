@@ -42,55 +42,57 @@
   }
 </script>
 
-<vstack modifiers="padding(20);">
-  <text modifiers="font(.largeTitle.bold()); padding(.bottom, 20);">Todo List</text>
-  
-  <list modifiers=".safeAreaInset(edge: .top, content: todo_form)">
-    <hstack template="todo_form">
-      <vstack>
+<navigationstack>
+  <list modifiers=".navigationTitle(&quot;Todo List&quot;).safeAreaInset(edge: .bottom, content: todo_form)">
+    <section>
+      {#each todos as todo (todo.id)}
+        <hstack id={todo.id} modifiers="swipeActions(edge: .trailing, allowsFullSwipe: true, content: trailingActions);">
+          <button template="trailingActions" role="destructive" onclick={() => removeTodo(todo.id)}>
+            <image systemName="trash" />
+          </button>
+          <label>
+            <hstack template="title">
+              <button onclick={() => toggleComplete(todo.id)}>
+                <image
+                  systemName={todo.completed ? "checkmark.circle.fill" : "circle"}
+                  modifiers="imageScale(.large)"
+                /> 
+              </button>
+              <vstack
+                alignment="leading"
+                modifiers="frame(maxWidth: .infinity, alignment: .leading);{todo.completed ? 'strikethrough(true, .dash);' : ''}"
+              >
+                <text>{todo.title}</text>
+                {#if todo.description}
+                  <text modifiers="foregroundStyle(.secondary); font(.caption);">{todo.description}</text>
+                {/if}
+              </vstack>
+            </hstack>
+          </label>
+        </hstack> 
+      {/each}
+
+      <text template="footer">
+        {remainingCount} of {totalCount} remaining
+      </text>
+    </section>
+
+    <vstack template="todo_form" modifiers="padding().glassEffect(in: .containerRelative).padding(.horizontal)">
+      <vstack modifiers="padding()">
         <textfield 
           bind:this={newTodoTitleInput} placeholder="Add a new todo..." 
-          modifiers="flex(1); padding(8); border(1, .gray); cornerRadius(8);">
+        >
           Todo title
         </textfield>
         <textfield 
           bind:this={newTodoDescriptionInput} placeholder="Add a new todo..." 
-          modifiers="flex(1); padding(8); border(1, .gray); cornerRadius(8);">
+        >
           Todo description (optional)
         </textfield>
       </vstack>
-      <button onclick={addTodo} modifiers="buttonStyle(.borderedProminent)">Add</button>
-    </hstack> 
-  
-    {#each todos as todo (todo.id)}
-      <hstack id={todo.id} modifiers="swipeActions(edge: .trailing, allowsFullSwipe: true, content: trailingActions);">
-        <button template="trailingActions" role="destructive" onclick={() => removeTodo(todo.id)}>
-          <image systemName="trash" />
-        </button>
-        <label>
-          <hstack template="title">
-            <button onclick={() => toggleComplete(todo.id)}>
-              <image
-                systemName={todo.completed ? "checkmark.circle.fill" : "circle"}
-                modifiers="imageScale(.large)"
-              /> 
-            </button>
-            <vstack
-              alignment="leading"
-              modifiers="frame(maxWidth: .infinity, alignment: .leading);{todo.completed ? 'strikethrough(true, .dash);' : ''}"
-            >
-              <text>{todo.title}</text>
-              {#if todo.description}
-                <text modifiers="foregroundStyle(.secondary); font(.caption);">{todo.description}</text>
-              {/if}
-            </vstack>
-          </hstack>
-        </label>
-      </hstack> 
-    {/each}
+      <button onclick={addTodo} modifiers="buttonStyle(.borderedProminent)">
+        <text modifiers="frame(maxWidth: 9999)">Add</text>
+      </button>
+    </vstack>
   </list>
-
-  <text modifiers="padding(.top, 20); foregroundColor(.secondary);">
-    {remainingCount} of {totalCount} remaining
-  </text>
-</vstack>
+</navigationstack>
