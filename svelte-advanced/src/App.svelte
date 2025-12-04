@@ -13,12 +13,17 @@
   const totalCount = $derived(todos.length);
 
   function addTodo() {
-    const title = newTodoTitleInput.value;
-    const description = newTodoDescriptionInput.value;
-    if (title.trim()) {
-      todos.push({ id: nextId, title: title.trim(), description: description.trim(), completed: false });
-      newTodoTitleInput.value = '';
-      newTodoDescriptionInput.value = '';
+    const title = newTodoTitleInput.value.trim();
+    const description = (newTodoDescriptionInput.value || '').trim();
+
+    if (title !== '') {
+      const todo = { id: nextId, title: title, description: null, completed: false };
+      if (description !== '') {
+        todo.description = description;
+      }
+      todos.push(todo);
+      newTodoTitleInput.text = '';
+      newTodoDescriptionInput.text = '';
     }
   }
 
