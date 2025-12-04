@@ -56,7 +56,7 @@
     <button onclick={addTodo} modifiers="buttonStyle(.borderedProminent)">Add</button>
   </hstack> 
 
-  <list modifiers="clipShape(RoundedRectangle(cornerRadius: 12))">
+  <list modifiers="safeAreaInset(edge: .top, spacing: 0)">
     {#each todos as todo (todo.id)}
       <hstack id={todo.id} modifiers="swipeActions(edge: .trailing, allowsFullSwipe: true, content: trailingActions);">
         <button template="trailingActions" role="destructive" onclick={() => removeTodo(todo.id)}>
