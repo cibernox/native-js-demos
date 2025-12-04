@@ -45,23 +45,23 @@
 <vstack modifiers="padding(20);">
   <text modifiers="font(.largeTitle.bold()); padding(.bottom, 20);">Todo List</text>
   
-  <hstack modifiers="safeAreaInset(edge: .top, spacing: 20)">
-    <vstack>
-      <textfield 
-        bind:this={newTodoTitleInput} placeholder="Add a new todo..." 
-        modifiers="flex(1); padding(8); border(1, .gray); cornerRadius(8);">
-        Todo title
-      </textfield>
-      <textfield 
-        bind:this={newTodoDescriptionInput} placeholder="Add a new todo..." 
-        modifiers="flex(1); padding(8); border(1, .gray); cornerRadius(8);">
-        Todo description (optional)
-      </textfield>
-    </vstack>
-    <button onclick={addTodo} modifiers="buttonStyle(.borderedProminent)">Add</button>
-  </hstack> 
-
-  <list>
+  <list modifiers=".safeAreaInset(edge: .top, content: form)">
+    <hstack template="todo_form">
+      <vstack>
+        <textfield 
+          bind:this={newTodoTitleInput} placeholder="Add a new todo..." 
+          modifiers="flex(1); padding(8); border(1, .gray); cornerRadius(8);">
+          Todo title
+        </textfield>
+        <textfield 
+          bind:this={newTodoDescriptionInput} placeholder="Add a new todo..." 
+          modifiers="flex(1); padding(8); border(1, .gray); cornerRadius(8);">
+          Todo description (optional)
+        </textfield>
+      </vstack>
+      <button onclick={addTodo} modifiers="buttonStyle(.borderedProminent)">Add</button>
+    </hstack> 
+  
     {#each todos as todo (todo.id)}
       <hstack id={todo.id} modifiers="swipeActions(edge: .trailing, allowsFullSwipe: true, content: trailingActions);">
         <button template="trailingActions" role="destructive" onclick={() => removeTodo(todo.id)}>
