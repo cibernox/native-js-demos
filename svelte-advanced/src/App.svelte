@@ -40,7 +40,7 @@
 <vstack modifiers="padding(20);">
   <text modifiers="font(.largeTitle.bold()); padding(.bottom, 20);">Todo List</text>
   
-  <hstack modifiers="padding(.bottom, 20);">
+  <hstack modifiers="safeAreaInset(edge: .top, spacing: 20)">
     <vstack>
       <textfield 
         bind:this={newTodoTitleInput} placeholder="Add a new todo..." 
@@ -56,7 +56,7 @@
     <button onclick={addTodo} modifiers="buttonStyle(.borderedProminent)">Add</button>
   </hstack> 
 
-  <list modifiers="safeAreaInset(edge: .top, spacing: 0)">
+  <list>
     {#each todos as todo (todo.id)}
       <hstack id={todo.id} modifiers="swipeActions(edge: .trailing, allowsFullSwipe: true, content: trailingActions);">
         <button template="trailingActions" role="destructive" onclick={() => removeTodo(todo.id)}>
