@@ -55,7 +55,6 @@
               <button onclick={() => toggleComplete(todo.id)}>
                 <image
                   systemName={todo.completed ? "checkmark.circle.fill" : "circle"}
-                  modifiers="imageScale(.large)"
                 /> 
               </button>
               <vstack
