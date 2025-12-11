@@ -103,20 +103,18 @@ export default class TodoListComponent extends Component {
 
         <vstack template="todo_form" modifiers="padding().glassEffect(in: .containerRelative).padding(.horizontal)">
           <vstack modifiers="padding()">
-            <textfield
-              placeholder="Add a new todo..."
+            {{!-- <textfield
               value={{this.newTodoTitleInput}}
               {{on "input" this.updateTitle}}
             >
               Todo title
             </textfield>
             <textfield
-              placeholder="Add a new todo..."
               value={{this.newTodoDescriptionInput}}
               {{on "input" this.updateDescription}}
             >
               Todo description (optional)
-            </textfield>
+            </textfield> --}}
           </vstack>
           <button {{on "click" this.addTodo}} modifiers="buttonStyle(.borderedProminent)">
             <text modifiers="frame(maxWidth: 9999)">Add</text>
