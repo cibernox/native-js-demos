@@ -1,6 +1,5 @@
-// import Counter from '../components/counter';
+import TodoList from '../components/todo-list';
 
 <template>
-  <text>Hello world from template!</text>
-  {{!-- <Counter /> --}}
+  <TodoList />
 </template>

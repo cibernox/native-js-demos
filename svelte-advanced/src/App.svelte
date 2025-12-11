@@ -22,8 +22,8 @@
         todo.description = description;
       }
       todos.push(todo);
-      newTodoTitleInput.text = '';
-      newTodoDescriptionInput.text = '';
+      newTodoTitleInput.value = '';
+      newTodoDescriptionInput.value = '';
     }
   }
 

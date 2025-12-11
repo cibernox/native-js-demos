@@ -14,24 +14,17 @@
   </head>
   <body>
     {{content-for "body"}}
-    <text>Hello world from body!!</text>
     <vstack id="app-wrapper"></vstack>
     <script src="/@embroider/virtual/vendor.js"></script>
     <script type="module">
       import Application from './app/app';
+      Application.create({
+        // Here you can pass flags/options to your application instance
+        // when it is created
+        rootElement: '#app-wrapper',
+      });
       // import environment from './app/config/environment';
-      setTimeout(() => {
-        debugger;
-        // environment.APP
-        Application.create({
-          // Here you can pass flags/options to your application instance
-          // when it is created
-          rootElement: '#app-wrapper',
-        });
-        debugger;
-      }, 8000);
     </script>
-    <text>goodbye world from body!</text>
 
     {{content-for "body-footer"}}
   </body>
