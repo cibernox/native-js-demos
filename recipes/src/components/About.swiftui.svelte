@@ -2,46 +2,25 @@
 	import { teamMembers, appStats, companyValues } from '$lib/data';
 </script>
 
-<scrollview modifiers="background(.background);">
-	<vstack spacing="30" modifiers="padding(.horizontal, 20);padding(.vertical, 20);">
-		<!-- Page Title -->
-		<text modifiers="font(.largeTitle);fontWeight(.bold);foregroundColor(.primary);multilineTextAlignment(.center);">
-			About Recipe Hub
-		</text>
+<navigationstack>
+	<scrollview>
+		<lazyvstack spacing="0" modifiers="padding(.horizontal, 0);">
 
-		<!-- Our Story Section -->
-		<vstack alignment="leading" spacing="20" modifiers="padding(24);background(.background);cornerRadius(16);shadow(.drop(radius: 4, x: 0, y: 2));">
-			<hstack spacing="8">
-				<text>🍽️</text>
-				<text modifiers="font(.title2);fontWeight(.semibold);foregroundColor(.primary);">
-					Our Story
+			<!-- Hero Section -->
+			<vstack spacing="16" modifiers="padding(.horizontal, 20);padding(.vertical, 32);background(.blue.gradient);cornerRadius(0);">
+				<text modifiers="font(.largeTitle);fontWeight(.bold);foregroundColor(.white);multilineTextAlignment(.center);">
+					About Recipe Hub
 				</text>
-			</hstack>
-
-			<vstack alignment="leading" spacing="16">
-				<text modifiers="font(.body);foregroundColor(.primary);lineSpacing(4);">
-					Recipe Hub was born from a simple belief: everyone deserves access to delicious, healthy, and easy-to-make meals. Founded in 2020 by chef Sarah Chen, we've grown from a small collection of family recipes to a thriving community of food lovers from around the world.
-				</text>
-
-				<text modifiers="font(.body);foregroundColor(.primary);lineSpacing(4);">
-					Our mission is to make cooking accessible, enjoyable, and sustainable. Whether you're a beginner learning to boil water or a seasoned chef looking for inspiration, we have something for everyone.
+				<text modifiers="font(.title3);foregroundColor(.white.opacity(0.9));multilineTextAlignment(.center);">
+					Making cooking accessible for everyone
 				</text>
 			</vstack>
-		</vstack>
 
-		<!-- Statistics Section -->
-		<vstack alignment="leading" spacing="20" modifiers="padding(24);background(.background);cornerRadius(16);shadow(.drop(radius: 4, x: 0, y: 2));">
-			<hstack spacing="8">
-				<text>📊</text>
-				<text modifiers="font(.title2);fontWeight(.semibold);foregroundColor(.primary);">
-					By the Numbers
-				</text>
-			</hstack>
-
-			<lazyvgrid columns="[GridItem(.adaptive(minimum: 120))]" spacing="16">
+			<!-- Statistics Cards -->
+			<lazyhgrid rows="[GridItem(.fixed(80))]" spacing="12" modifiers="padding(.horizontal, 20);padding(.vertical, 24);">
 				{#each appStats as stat}
-					<vstack spacing="8" modifiers="padding(16);background(.secondary.opacity(0.1));cornerRadius(12);">
-						<text modifiers="font(.title);fontWeight(.bold);foregroundColor(.primary);">
+					<vstack spacing="4" modifiers="padding(.vertical, 16);padding(.horizontal, 12);background(.gray.opacity(0.05));cornerRadius(12);frame(minWidth: 80);">
+						<text modifiers="font(.title2);fontWeight(.bold);foregroundColor(.orange);">
 							{stat.value}
 						</text>
 						<text modifiers="font(.caption);fontWeight(.medium);foregroundColor(.secondary);multilineTextAlignment(.center);">
@@ -49,78 +28,132 @@
 						</text>
 					</vstack>
 				{/each}
-			</lazyvgrid>
-		</vstack>
+			</lazyhgrid>
 
-		<!-- Team Section -->
-		<vstack alignment="leading" spacing="20" modifiers="padding(24);background(.background);cornerRadius(16);shadow(.drop(radius: 4, x: 0, y: 2));">
-			<hstack spacing="8">
-				<text>👥</text>
-				<text modifiers="font(.title2);fontWeight(.semibold);foregroundColor(.primary);">
-					Meet Our Team
-				</text>
-			</hstack>
+			<!-- Our Story Section -->
+			<section modifiers="padding(.horizontal, 20);padding(.bottom, 24);">
+				<text modifiers="font(.headline);fontWeight(.semibold);padding(.bottom, 12);">Our Story</text>
+				<vstack spacing="16" modifiers="padding(.vertical, 16);padding(.horizontal, 16);background(.background);cornerRadius(12);">
+					<text modifiers="font(.body);foregroundColor(.primary);lineSpacing(2);">
+						Recipe Hub was born from a simple belief: everyone deserves access to delicious, healthy, and easy-to-make meals. Founded in 2020 by chef Sarah Chen, we've grown from a small collection of family recipes to a thriving community of food lovers.
+					</text>
+					<text modifiers="font(.body);foregroundColor(.primary);lineSpacing(2);">
+						Our mission is to make cooking accessible, enjoyable, and sustainable for cooks of all skill levels.
+					</text>
+				</vstack>
+			</section>
 
-			<lazyvgrid columns="[GridItem(.adaptive(minimum: 250))]" spacing="20">
-				{#each teamMembers as member}
-					<vstack spacing="16" modifiers="padding(20);background(.secondary.opacity(0.1));cornerRadius(16);">
-						<!-- Team Photo -->
-						<asyncimage url="{member.image}" modifiers="frame(width: 100, height: 100);clipShape(.circle);overlay(.circle.stroke(.primary, lineWidth: 3));">
-							<circle modifiers="fill(.gray.opacity(0.3));frame(width: 100, height: 100);"></circle>
-						</asyncimage>
+			<!-- Team Section -->
+			<section modifiers="padding(.horizontal, 20);padding(.bottom, 24);">
+				<text modifiers="font(.headline);fontWeight(.semibold);padding(.bottom, 12);">Meet Our Team</text>
+				<vstack spacing="1" modifiers="background(.background);cornerRadius(12);overflow(.hidden);">
+					{#each teamMembers as member, index}
+						<hstack spacing="12" modifiers="padding(.horizontal, 16);padding(.vertical, 12);background(.background);">
+							<!-- Profile Image -->
+							<asyncimage url={member.image} modifiers="frame(width: 60, height: 60);clipShape(.circle);">
+								<circle modifiers="fill(.gray.opacity(0.3));frame(width: 60, height: 60);"></circle>
+							</asyncimage>
 
-						<!-- Team Info -->
-						<vstack spacing="8" modifiers="multilineTextAlignment(.center);">
-							<text modifiers="font(.headline);fontWeight(.semibold);foregroundColor(.primary);">
-								{member.name}
+							<!-- Member Info -->
+							<vstack alignment="leading" spacing="2">
+								<text modifiers="font(.headline);fontWeight(.semibold);">
+									{member.name}
+								</text>
+								<text modifiers="font(.subheadline);foregroundColor(.orange);fontWeight(.medium);">
+									{member.role}
+								</text>
+								<text modifiers="font(.caption);foregroundColor(.secondary);lineLimit(2);">
+									{member.bio}
+								</text>
+							</vstack>
+
+							<spacer />
+
+							<!-- Chevron -->
+							<image systemname="chevron.right" modifiers="font(.caption);foregroundColor(.tertiary);" />
+						</hstack>
+
+						{#if index < teamMembers.length - 1}
+							<divider modifiers="padding(.leading, 88);" />
+						{/if}
+					{/each}
+				</vstack>
+			</section>
+
+			<!-- Values Section -->
+			<section modifiers="padding(.horizontal, 20);padding(.bottom, 24);">
+				<text modifiers="font(.headline);fontWeight(.semibold);padding(.bottom, 12);">Our Values</text>
+				<vstack spacing="12">
+					{#each companyValues as value}
+						<hstack spacing="16" modifiers="padding(.horizontal, 16);padding(.vertical, 16);background(.background);cornerRadius(12);">
+							<!-- Value Icon -->
+							<vstack modifiers="frame(width: 44, height: 44);background(.orange.opacity(0.1));cornerRadius(22);">
+								<text modifiers="font(.title2);">
+									{value.icon}
+								</text>
+							</vstack>
+
+							<!-- Value Content -->
+							<vstack alignment="leading" spacing="4">
+								<text modifiers="font(.headline);fontWeight(.semibold);">
+									{value.title}
+								</text>
+								<text modifiers="font(.subheadline);foregroundColor(.secondary);lineLimit(3);">
+									{value.description}
+								</text>
+							</vstack>
+
+							<spacer />
+						</hstack>
+					{/each}
+				</vstack>
+			</section>
+
+			<!-- Contact Section -->
+			<section modifiers="padding(.horizontal, 20);padding(.bottom, 40);">
+				<text modifiers="font(.headline);fontWeight(.semibold);padding(.bottom, 12);">Get In Touch</text>
+				<vstack spacing="1" modifiers="background(.background);cornerRadius(12);overflow(.hidden);">
+					<button modifiers="padding(.horizontal, 16);padding(.vertical, 16);background(.background);">
+						<hstack spacing="12">
+							<image systemname="envelope" modifiers="font(.title3);foregroundColor(.orange);" />
+							<text modifiers="font(.body);fontWeight(.medium);foregroundColor(.primary);">
+								Send us feedback
 							</text>
+							<spacer />
+							<image systemname="chevron.right" modifiers="font(.caption);foregroundColor(.tertiary);" />
+						</hstack>
+					</button>
 
-							<text modifiers="font(.subheadline);fontWeight(.medium);foregroundColor(.secondary);">
-								{member.role}
+					<divider />
+
+					<button modifiers="padding(.horizontal, 16);padding(.vertical, 16);background(.background);">
+						<hstack spacing="12">
+							<image systemname="star" modifiers="font(.title3);foregroundColor(.orange);" />
+							<text modifiers="font(.body);fontWeight(.medium);foregroundColor(.primary);">
+								Rate us on the App Store
 							</text>
+							<spacer />
+							<image systemname="chevron.right" modifiers="font(.caption);foregroundColor(.tertiary);" />
+						</hstack>
+					</button>
 
-							<text modifiers="font(.caption);foregroundColor(.secondary);multilineTextAlignment(.center);padding(.horizontal, 8);">
-								{member.bio}
+					<divider />
+
+					<button modifiers="padding(.horizontal, 16);padding(.vertical, 16);background(.background);">
+						<hstack spacing="12">
+							<image systemname="square.and.arrow.up" modifiers="font(.title3);foregroundColor(.orange);" />
+							<text modifiers="font(.body);fontWeight(.medium);foregroundColor(.primary);">
+								Share Recipe Hub
 							</text>
-						</vstack>
-					</vstack>
-				{/each}
-			</lazyvgrid>
-		</vstack>
+							<spacer />
+							<image systemname="chevron.right" modifiers="font(.caption);foregroundColor(.tertiary);" />
+						</hstack>
+					</button>
+				</vstack>
+			</section>
 
-		<!-- Values Section -->
-		<vstack alignment="leading" spacing="20" modifiers="padding(24);background(.background);cornerRadius(16);shadow(.drop(radius: 4, x: 0, y: 2));">
-			<hstack spacing="8">
-				<text>🌱</text>
-				<text modifiers="font(.title2);fontWeight(.semibold);foregroundColor(.primary);">
-					Our Values
-				</text>
-			</hstack>
+		</lazyvstack>
+	</scrollview>
 
-			<lazyvgrid columns="[GridItem(.adaptive(minimum: 200))]" spacing="16">
-				{#each companyValues as value}
-					<vstack spacing="16" modifiers="padding(20);background(.secondary.opacity(0.1));cornerRadius(16);">
-						<!-- Value Icon -->
-						<text modifiers="font(.title);">
-							{value.icon}
-						</text>
-
-						<!-- Value Content -->
-						<vstack spacing="8" modifiers="multilineTextAlignment(.center);">
-							<text modifiers="font(.headline);fontWeight(.semibold);foregroundColor(.primary);">
-								{value.title}
-							</text>
-
-							<text modifiers="font(.subheadline);foregroundColor(.secondary);multilineTextAlignment(.center);padding(.horizontal, 4);">
-								{value.description}
-							</text>
-						</vstack>
-					</vstack>
-				{/each}
-			</lazyvgrid>
-		</vstack>
-
-		<!-- Bottom Spacing -->
-		<spacer modifiers="frame(height: 20);"></spacer>
-	</vstack>
-</scrollview>
+	<navigationtitle>About</navigationtitle>
+</navigationstack>

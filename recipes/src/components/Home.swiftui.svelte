@@ -1,96 +1,116 @@
 <script lang="ts">
 	import { recipes, appFeatures } from '$lib/data';
+	let searchText = $state('');
+
+	// Filter recipes based on search
+	const filteredRecipes = $derived(searchText
+		? recipes.filter(recipe =>
+			recipe.title.toLowerCase().includes(searchText.toLowerCase()) ||
+			recipe.description.toLowerCase().includes(searchText.toLowerCase())
+		)
+		: recipes
+	);
 </script>
 
-<scrollview modifiers="background(.background);">
-	<!-- Hero Section -->
-	<vstack spacing="20" modifiers="padding(.horizontal, 20);padding(.top, 40);padding(.bottom, 30);">
-		<text modifiers="font(.largeTitle);fontWeight(.bold);foregroundColor(.primary);multilineTextAlignment(.center);">
-			Welcome to Recipe Hub
-		</text>
-		<text modifiers="font(.title2);foregroundColor(.secondary);multilineTextAlignment(.center);padding(.horizontal, 20);">
-			Discover amazing recipes from around the world
-		</text>
-	</vstack>
-
-	<!-- Featured Recipes Header -->
-	<vstack alignment="leading" spacing="10" modifiers="padding(.horizontal, 20);padding(.bottom, 20);">
-		<hstack spacing="8">
-			<text>✨</text>
-			<text modifiers="font(.title2);fontWeight(.semibold);foregroundColor(.primary);">
-				Featured Recipes
-			</text>
-		</hstack>
-		<text modifiers="font(.body);foregroundColor(.secondary);multilineTextAlignment(.leading);">
-			Handpicked recipes that are perfect for any occasion. From quick weekday meals to impressive dinner party dishes.
-		</text>
-	</vstack>
-
-	<!-- Recipe Grid -->
-	<lazyvgrid columns="[GridItem(.adaptive(minimum: 300))]" spacing="16" modifiers="padding(.horizontal, 20);padding(.bottom, 30);">
-		{#each recipes as recipe}
-			<vstack alignment="leading" spacing="12" modifiers="background(.background);cornerRadius(16);shadow(.drop(radius: 4, x: 0, y: 2));">
-				<!-- Recipe Image -->
-				<asyncimage url={recipe.image} modifiers="frame(height: 200);clipped();cornerRadius(16, corners: [.topLeading, .topTrailing]);">
-					<rectangle modifiers="fill(.gray.opacity(0.3));"></rectangle>
-				</asyncimage>
-
-				<!-- Recipe Content -->
-				<vstack alignment="leading" spacing="8" modifiers="padding(.horizontal, 16);padding(.bottom, 16);">
-					<text modifiers="font(.headline);fontWeight(.semibold);foregroundColor(.primary);lineLimit(2);">
-						{recipe.title}
-					</text>
-
-					<text modifiers="font(.subheadline);foregroundColor(.secondary);lineLimit(3);">
-						{recipe.description}
-					</text>
-
-					<!-- Recipe Meta -->
-					<hstack spacing="16" modifiers="padding(.top, 8);">
-						<hstack spacing="4">
-							<text>⏱️</text>
-							<text modifiers="font(.caption);foregroundColor(.secondary);">
-								{recipe.cookTime}
-							</text>
-						</hstack>
-
-						<hstack spacing="4">
-							<text>👨‍🍳</text>
-							<text modifiers="font(.caption);foregroundColor(.secondary);">
-								{recipe.difficulty}
-							</text>
-						</hstack>
-					</hstack>
-				</vstack>
-			</vstack>
-		{/each}
-	</lazyvgrid>
-
-	<!-- Features Section -->
-	<vstack alignment="leading" spacing="20" modifiers="padding(.horizontal, 20);padding(.bottom, 40);">
-		<hstack spacing="8">
-			<text>🍳</text>
-			<text modifiers="font(.title2);fontWeight(.semibold);foregroundColor(.primary);">
-				Why Choose Recipe Hub?
-			</text>
+<navigationstack>
+	<vstack spacing="0">
+		<!-- Search Bar -->
+		<hstack modifiers="padding(.horizontal, 16);padding(.vertical, 8);">
+			<hstack spacing="8" modifiers="padding(.horizontal, 12);padding(.vertical, 8);background(.gray.opacity(0.1));cornerRadius(10);">
+				<image systemname="magnifyingglass" modifiers="foregroundColor(.secondary);" />
+				<textfield text="{searchText}" prompt="Search recipes..." oninput="{(e) => searchText = e.target.value}" modifiers="textFieldStyle(.plain);" />
+			</hstack>
 		</hstack>
 
-		<lazyvgrid columns="[GridItem(.adaptive(minimum: 250))]" spacing="16">
-			{#each appFeatures as feature}
-				<vstack spacing="12" modifiers="padding(20);background(.background);cornerRadius(16);shadow(.drop(radius: 2, x: 0, y: 1));">
-					<text modifiers="font(.title);">
-						{feature.icon}
-					</text>
+		<!-- Recipe List -->
+		<scrollview>
+			<lazyvstack spacing="0" modifiers="padding(.horizontal, 16);">
+				<!-- Featured Section Header -->
+				<hstack modifiers="padding(.vertical, 16);">
+					<vstack alignment="leading" spacing="4">
+						<text modifiers="font(.title2);fontWeight(.bold);">Featured Recipes</text>
+						<text modifiers="font(.subheadline);foregroundColor(.secondary);">Handpicked just for you</text>
+					</vstack>
+					<spacer />
+				</hstack>
 
-					<text modifiers="font(.headline);fontWeight(.semibold);foregroundColor(.primary);multilineTextAlignment(.center);">
-						{feature.title}
-					</text>
+				<!-- Recipe Cards -->
+				{#each filteredRecipes as recipe}
+					<vstack spacing="0" modifiers="background(.background);cornerRadius(12);shadow(.drop(radius: 2, x: 0, y: 1));marginBottom(16);">
+						<!-- Recipe Image -->
+						<asyncimage url={recipe.image} modifiers="frame(height: 200);clipped();cornerRadius(12, corners: [.topLeading, .topTrailing]);">
+							<rectangle modifiers="fill(.gray.opacity(0.2));frame(height: 200);"></rectangle>
+						</asyncimage>
 
-					<text modifiers="font(.body);foregroundColor(.secondary);multilineTextAlignment(.center);">
-						{feature.description}
-					</text>
+						<!-- Recipe Content -->
+						<vstack alignment="leading" spacing="8" modifiers="padding(16);">
+							<hstack alignment="top">
+								<vstack alignment="leading" spacing="4">
+									<text modifiers="font(.headline);fontWeight(.semibold);lineLimit(2);">
+										{recipe.title}
+									</text>
+									<text modifiers="font(.subheadline);foregroundColor(.secondary);lineLimit(2);">
+										{recipe.description}
+									</text>
+								</vstack>
+								<spacer />
+							</hstack>
+
+							<!-- Recipe Meta -->
+							<hstack spacing="16" modifiers="padding(.top, 8);">
+								<label modifiers="padding(.horizontal, 8);padding(.vertical, 4);background(.orange.opacity(0.1));cornerRadius(6);">
+									<hstack spacing="4">
+										<image systemname="clock" modifiers="font(.caption);foregroundColor(.orange);" />
+										<text modifiers="font(.caption);fontWeight(.medium);foregroundColor(.orange);">
+											{recipe.cookTime}
+										</text>
+									</hstack>
+								</label>
+
+								<label modifiers="padding(.horizontal, 8);padding(.vertical, 4);background(.blue.opacity(0.1));cornerRadius(6);">
+									<hstack spacing="4">
+										<image systemname="star" modifiers="font(.caption);foregroundColor(.blue);" />
+										<text modifiers="font(.caption);fontWeight(.medium);foregroundColor(.blue);">
+											{recipe.difficulty}
+										</text>
+									</hstack>
+								</label>
+
+								<spacer />
+
+								<button modifiers="padding(.horizontal, 16);padding(.vertical, 8);background(.orange);cornerRadius(8);">
+									<text modifiers="font(.subheadline);fontWeight(.semibold);foregroundColor(.white);">View</text>
+								</button>
+							</hstack>
+						</vstack>
+					</vstack>
+				{/each}
+
+				<!-- Quick Tips Section -->
+				<vstack alignment="leading" spacing="16" modifiers="padding(.vertical, 20);">
+					<text modifiers="font(.title2);fontWeight(.bold);">Quick Tips</text>
+
+					{#each appFeatures as feature}
+						<hstack spacing="12" modifiers="padding(16);background(.gray.opacity(0.05));cornerRadius(12);">
+							<text modifiers="font(.title3);">{feature.icon}</text>
+							<vstack alignment="leading" spacing="4">
+								<text modifiers="font(.subheadline);fontWeight(.semibold);">
+									{feature.title}
+								</text>
+								<text modifiers="font(.caption);foregroundColor(.secondary);">
+									{feature.description}
+								</text>
+							</vstack>
+							<spacer />
+						</hstack>
+					{/each}
 				</vstack>
-			{/each}
-		</lazyvgrid>
+
+				<!-- Bottom padding -->
+				<spacer modifiers="frame(height: 20);" />
+			</lazyvstack>
+		</scrollview>
 	</vstack>
-</scrollview>
+
+	<navigationtitle modifiers="displayMode(.large);">Recipe Hub</navigationtitle>
+</navigationstack>

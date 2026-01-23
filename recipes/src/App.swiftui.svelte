@@ -1,18 +1,13 @@
 <script lang="ts">
-	import Header from "$lib/Header.swiftui.svelte";
 	import Home from "./components/Home.swiftui.svelte";
 	import About from "./components/About.swiftui.svelte";
-	import { currentPage } from "./lib/stores/current-page";
 </script>
 
-<vstack spacing="0" modifiers="frame(maxWidth: .infinity, maxHeight: .infinity);background(.background);">
-	<Header />
-
-	{#if $currentPage === 'home'}
+<tabview>
+	<tab title="Recipes" systemimage="fork.knife" tag="home">
 		<Home />
-	{:else if $currentPage === 'about'}
+	</tab>
+	<tab title="About" systemimage="info.circle" tag="about">
 		<About />
-	{:else}
-		<Home />
-	{/if}
-</vstack>
+	</tab>
+</tabview>
