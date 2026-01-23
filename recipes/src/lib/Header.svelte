@@ -1,11 +1,14 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
+  import { currentPage } from "./stores/current-page";
+  function navigateTo(path: string) {
+    window.location.hash = path;
+  }
 </script>
-<hstack>
-  <text>Recipes App</text>
-  <hstack>
-    <text onclick={() => goto("/")}>Home</text>
-    <text onclick={() => goto("/about")}>About!</text>
-    <text>Link 3</text>
-  </hstack>
-</hstack>
+
+<nav>
+  <p>Recipes App</p>
+  <ul>
+    <li><button on:click={() => $currentPage = 'home'}>Home</button></li>
+    <li><button on:click={() => $currentPage = 'about'}>About!</button></li>
+  </ul>
+</nav>
