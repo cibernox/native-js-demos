@@ -31,7 +31,7 @@
 		{#each recipes as recipe}
 			<vstack alignment="leading" spacing="12" modifiers="background(.background);cornerRadius(16);shadow(.drop(radius: 4, x: 0, y: 2));">
 				<!-- Recipe Image -->
-				<asyncimage url="{recipe.image}" modifiers="frame(height: 200);clipped();cornerRadius(16, corners: [.topLeading, .topTrailing]);">
+				<asyncimage url={recipe.image} modifiers="frame(height: 200);clipped();cornerRadius(16, corners: [.topLeading, .topTrailing]);">
 					<rectangle modifiers="fill(.gray.opacity(0.3));"></rectangle>
 				</asyncimage>
 
