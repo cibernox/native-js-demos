@@ -18,7 +18,7 @@ export const recipes = [
 		cookTime: "35 min",
 		difficulty: "Medium",
 		type: "main-course",
-		ingredients: ["green curry paste", "coconut milk", "chicken", "thai basil", "bell peppers", "bamboo shoots", "fish sauce", "palm sugar"]
+		ingredients: ["green curry", "coconut milk", "chicken", "thai basil", "bell peppers", "bamboo shoots", "fish sauce", "palm sugar"]
 	},
 	{
 		id: 3,

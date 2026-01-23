@@ -15,7 +15,7 @@ function conditionalHtml(): Plugin {
 
 				// Check if the request accepts text/vml
 				// const isSwiftuiRequest = acceptHeader.includes('text/vml');
-				const isSwiftuiRequest = false;
+				const isSwiftuiRequest = true;
 				
 				if (isSwiftuiRequest) {
 					// Intercept the request and serve SwiftUI template

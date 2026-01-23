@@ -66,13 +66,36 @@
 			<text modifiers="font(.subheadline);fontWeight(.semibold);foregroundColor(.primary);">
 				Ingredients:
 			</text>
-			<lazyvgrid columns="[GridItem(.adaptive(minimum: 80))]" spacing="8">
-				{#each recipe.ingredients as ingredient}
-					<text modifiers="padding(.horizontal, 8);padding(.vertical, 4);background(.gray.opacity(0.1));cornerRadius(6);font(.caption);fontWeight(.medium);foregroundColor(.secondary);multilineTextAlignment(.center);">
-						{ingredient}
-					</text>
-				{/each}
-			</lazyvgrid>
+			<vstack alignment="leading" spacing="6">
+				<hstack spacing="6" modifiers="frame(maxWidth: .infinity, alignment: .leading);">
+					{#each recipe.ingredients.slice(0, 4) as ingredient}
+						<text modifiers="padding(.horizontal, 7);padding(.vertical, 6);background(.blue.opacity(0.2), in: .capsule);overlay(.capsule.stroke(.blue, lineWidth: 1));font(.caption);fontWeight(.medium);foregroundColor(.blue);">
+							{ingredient}
+						</text>
+					{/each}
+					<spacer />
+				</hstack>
+				{#if recipe.ingredients.length > 4}
+					<hstack spacing="6">
+						{#each recipe.ingredients.slice(4, 8) as ingredient}
+							<text modifiers="padding(.horizontal, 7);padding(.vertical, 6);background(.blue.opacity(0.2), in: .capsule);overlay(.capsule.stroke(.blue, lineWidth: 1));font(.caption);fontWeight(.medium);foregroundColor(.blue);">
+								{ingredient}
+							</text>
+						{/each}
+						<spacer />
+					</hstack>
+				{/if}
+				{#if recipe.ingredients.length > 8}
+					<hstack spacing="6" modifiers="frame(maxWidth: .infinity, alignment: .leading);">
+						{#each recipe.ingredients.slice(8) as ingredient}
+							<text modifiers="padding(.horizontal, 7);padding(.vertical, 6);background(.blue.opacity(0.2), in: .capsule);overlay(.capsule.stroke(.blue, lineWidth: 1));font(.caption);fontWeight(.medium);foregroundColor(.blue);">
+								{ingredient}
+							</text>
+						{/each}
+						<spacer />
+					</hstack>
+				{/if}
+			</vstack>
 		</vstack>
 	</vstack>
 </vstack>
