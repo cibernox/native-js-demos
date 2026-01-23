@@ -1,8 +1,5 @@
 <script lang="ts">
   import { currentPage } from "./stores/current-page";
-  function navigateTo(path: string) {
-    window.location.hash = path;
-  }
 </script>
 
 <nav>

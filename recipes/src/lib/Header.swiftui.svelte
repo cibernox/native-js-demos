@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentPage } from "../App.swiftui.svelte";
+  import { currentPage } from "./stores/current-page";
 </script>
 
 <hstack>
