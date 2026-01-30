@@ -30,8 +30,6 @@
 </script>
 
 <navigationstack>
-	<navigationtitle>Recipe Hub</navigationtitle>
-
 	<toolbar placement="topBarTrailing">
 		<button onclick={() => showingFilters = true}>
 			{#if hasActiveFilters}
@@ -42,9 +40,19 @@
 		</button>
 	</toolbar>
 
-	<scrollview modifiers="navigationBarTitleDisplayMode(.large);">
+	<scrollview>
 		<lazyvstack spacing="0" modifiers="padding(.horizontal, 16);">
-			<!-- Header Section -->
+			<!-- Brand Header -->
+			<hstack spacing="10" modifiers="padding(.top, 8);padding(.bottom, 16);">
+				<image systemname="fork.knife.circle.fill" modifiers="font(.system(size: 36));foregroundColor(.orange);" />
+				<vstack alignment="leading" spacing="0">
+					<text modifiers="font(.title);fontWeight(.bold);foregroundColor(.primary);">Recipe Hub</text>
+					<text modifiers="font(.caption);foregroundColor(.secondary);">Discover & Cook</text>
+				</vstack>
+				<spacer />
+			</hstack>
+
+			<!-- Featured Section Header -->
 			{#if !hasActiveFilters}
 				<vstack alignment="leading" spacing="16" modifiers="padding(.vertical, 16);">
 					<vstack alignment="leading" spacing="4">
