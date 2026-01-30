@@ -40,7 +40,11 @@
 		</button>
 	</toolbar>
 
-	<scrollview>
+	<scrollview
+		showingfilters={showingFilters}
+		modifiers="sheet(isPresented: $showingfilters, content: filterSheet);"
+		onshowingfilterschanged={(e) => showingFilters = e.detail.value}
+	>
 		<lazyvstack spacing="0" modifiers="padding(.horizontal, 16);">
 			<!-- Brand Header -->
 			<hstack spacing="10" modifiers="padding(.top, 8);padding(.bottom, 16);">
@@ -123,15 +127,9 @@
 		</lazyvstack>
 	</scrollview>
 
-	<searchable text={searchText} prompt="Search recipes..." />
+	<!-- <searchable text={searchText} prompt="Search recipes..." /> -->
 
-	<!-- Container with sheet modifier -->
-	<vstack
-		showingfilters={showingFilters}
-		modifiers="frame(width: 0, height: 0);sheet(isPresented: $showingfilters, content: filterSheet);"
-		onshowingfilterschanged={(e) => showingFilters = e.detail.value}
-	>
-		<navigationstack template="filterSheet">
+	<navigationstack template="filterSheet">
 			<navigationtitle>Filters</navigationtitle>
 
 			<toolbar placement="topBarTrailing">
@@ -179,5 +177,4 @@
 				</vstack>
 			</scrollview>
 		</navigationstack>
-	</vstack>
 </navigationstack>
