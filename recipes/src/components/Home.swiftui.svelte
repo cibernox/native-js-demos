@@ -32,6 +32,16 @@
 <navigationstack>
 	<navigationtitle modifiers="navigationBarTitleDisplayMode(.large);">Recipe Hub</navigationtitle>
 
+	<toolbar placement="topBarTrailing">
+		<button onclick={() => showingFilters = true}>
+			{#if hasActiveFilters}
+				<image systemname="line.3.horizontal.decrease.circle.fill" modifiers="foregroundColor(.orange);" />
+			{:else}
+				<image systemname="line.3.horizontal.decrease.circle" modifiers="foregroundColor(.blue);" />
+			{/if}
+		</button>
+	</toolbar>
+
 	<scrollview>
 		<lazyvstack spacing="0" modifiers="padding(.horizontal, 16);">
 			<!-- Header Section -->
@@ -107,86 +117,59 @@
 
 	<searchable text={searchText} prompt="Search recipes..." />
 
-	<!-- Toolbar with Filter Button -->
-	<!-- <toolbar>
-		<toolbaritem placement="topBarTrailing">
-			<button onclick={() => showingFilters = true}>
-				<hstack spacing="4">
-					<image systemname="line.3.horizontal.decrease.circle{hasActiveFilters ? '.fill' : ''}"
-						   modifiers="foregroundColor({hasActiveFilters ? '.orange' : '.primary'});" />
-					{#if hasActiveFilters}
-						<text modifiers="font(.caption2);fontWeight(.semibold);foregroundColor(.orange);">
-							{selectedType !== 'all' ? '1' : ''}
-						</text>
-					{/if}
-				</hstack>
-			</button>
-		</toolbaritem>
-	</toolbar> -->
+	<!-- Container with sheet modifier -->
+	<vstack
+		showingfilters={showingFilters}
+		modifiers="frame(width: 0, height: 0);sheet(isPresented: $showingfilters, content: filterSheet);"
+		onshowingfilterschanged={(e) => showingFilters = e.detail.value}
+	>
+		<navigationstack template="filterSheet">
+			<navigationtitle>Filters</navigationtitle>
 
-	<!-- Filter Sheet -->
-	<!-- <sheet modifiers="sheet(isPresented: {showingFilters});">
-		<navigationstack>
-			<vstack alignment="leading" spacing="20" modifiers="padding(.horizontal, 20);padding(.vertical, 20);">
-				<vstack alignment="leading" spacing="12">
-					<text modifiers="font(.headline);fontWeight(.semibold);">Recipe Type</text>
+			<toolbar placement="topBarTrailing">
+				<button onclick={() => showingFilters = false}>
+					<text modifiers="font(.body);fontWeight(.semibold);foregroundColor(.orange);">Done</text>
+				</button>
+			</toolbar>
 
-					<vstack spacing="1" modifiers="background(.background);cornerRadius(12);overflow(.hidden);">
-						<button
-							modifiers="padding(.horizontal, 16);padding(.vertical, 12);background(.background);"
-							onclick={() => selectedType = 'all'}
-						>
-							<hstack>
-								<text modifiers="font(.body);fontWeight(.medium);foregroundColor({selectedType === 'all' ? '.orange' : '.primary'});">
-									All Types ({filteredResult.counts.all})
-								</text>
-								<spacer />
-								{#if selectedType === 'all'}
-									<image systemname="checkmark" modifiers="foregroundColor(.orange);" />
-								{/if}
-							</hstack>
-						</button>
+			<scrollview>
+				<vstack alignment="leading" spacing="20" modifiers="padding(.horizontal, 20);padding(.vertical, 20);">
+					<vstack alignment="leading" spacing="12">
+						<text modifiers="font(.headline);fontWeight(.semibold);">Recipe Type</text>
 
-						{#each recipeTypes as type}
-							<divider />
-							<button
-								modifiers="padding(.horizontal, 16);padding(.vertical, 12);background(.background);"
-								onclick={() => selectedType = type.value}
-							>
+						<vstack spacing="0" modifiers="background(.gray.opacity(0.1), in: .rect(cornerRadius: 12));">
+							<button modifiers="padding(.horizontal, 16);padding(.vertical, 14);" onclick={() => { selectedType = 'all'; showingFilters = false; }}>
 								<hstack>
-									<text modifiers="font(.body);fontWeight(.medium);foregroundColor({selectedType === type.value ? '.orange' : '.primary'});">
-										{type.label} ({filteredResult.counts[type.value]})
-									</text>
+									<text modifiers="font(.body);fontWeight(.medium);">All Types</text>
 									<spacer />
-									{#if selectedType === type.value}
+									{#if selectedType === 'all'}
 										<image systemname="checkmark" modifiers="foregroundColor(.orange);" />
 									{/if}
 								</hstack>
 							</button>
-						{/each}
+
+							{#each recipeTypes as type}
+								<divider modifiers="padding(.leading, 16);" />
+								<button modifiers="padding(.horizontal, 16);padding(.vertical, 14);" onclick={() => { selectedType = type.value; showingFilters = false; }}>
+									<hstack>
+										<text modifiers="font(.body);fontWeight(.medium);">{type.label}</text>
+										<spacer />
+										{#if selectedType === type.value}
+											<image systemname="checkmark" modifiers="foregroundColor(.orange);" />
+										{/if}
+									</hstack>
+								</button>
+							{/each}
+						</vstack>
 					</vstack>
+
+					{#if hasActiveFilters}
+						<button modifiers="frame(maxWidth: .infinity);padding(.vertical, 14);background(.red.opacity(0.9), in: .rect(cornerRadius: 12));" onclick={() => { clearFilters(); showingFilters = false; }}>
+							<text modifiers="font(.subheadline);fontWeight(.semibold);foregroundColor(.white);">Clear All Filters</text>
+						</button>
+					{/if}
 				</vstack>
-
-				{#if hasActiveFilters}
-					<button
-						modifiers="padding(.horizontal, 20);padding(.vertical, 12);background(.red);cornerRadius(12);"
-						onclick={() => {clearFilters(); showingFilters = false;}}
-					>
-						<text modifiers="font(.subheadline);fontWeight(.semibold);foregroundColor(.white);">
-							Clear All Filters
-						</text>
-					</button>
-				{/if}
-			</vstack>
-
-			<navigationtitle>Filters</navigationtitle>
-			<toolbar>
-				<toolbaritem placement="topBarTrailing">
-					<button onclick={() => showingFilters = false}>
-						<text modifiers="font(.body);fontWeight(.medium);foregroundColor(.orange);">Done</text>
-					</button>
-				</toolbaritem>
-			</toolbar>
+			</scrollview>
 		</navigationstack>
-	</sheet> -->
+	</vstack>
 </navigationstack>
