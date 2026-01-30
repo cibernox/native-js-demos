@@ -30,7 +30,7 @@
 </script>
 
 <navigationstack>
-	<navigationtitle modifiers="navigationBarTitleDisplayMode(.large);">Recipe Hub</navigationtitle>
+	<navigationtitle>Recipe Hub</navigationtitle>
 
 	<toolbar placement="topBarTrailing">
 		<button onclick={() => showingFilters = true}>
@@ -42,7 +42,7 @@
 		</button>
 	</toolbar>
 
-	<scrollview>
+	<scrollview modifiers="navigationBarTitleDisplayMode(.large);">
 		<lazyvstack spacing="0" modifiers="padding(.horizontal, 16);">
 			<!-- Header Section -->
 			{#if !hasActiveFilters}
