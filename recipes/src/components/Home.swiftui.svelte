@@ -125,11 +125,8 @@
 			<!-- Bottom padding -->
 			<spacer modifiers="frame(height: 20);" />
 		</lazyvstack>
-	</scrollview>
 
-	<!-- <searchable text={searchText} prompt="Search recipes..." /> -->
-
-	<navigationstack template="filterSheet">
+		<navigationstack template="filterSheet">
 			<navigationtitle>Filters</navigationtitle>
 
 			<toolbar placement="topBarTrailing">
@@ -177,4 +174,7 @@
 				</vstack>
 			</scrollview>
 		</navigationstack>
+	</scrollview>
+
+	<!-- <searchable text={searchText} prompt="Search recipes..." /> -->
 </navigationstack>
