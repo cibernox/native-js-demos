@@ -182,6 +182,21 @@ export const recipeTypes = [
 
 export type RecipeType = typeof recipeTypes[number]['value'];
 
+// Color mapping for recipe types (SwiftUI color names)
+export const recipeTypeColors: Record<RecipeType, string> = {
+	"appetizer": "green",
+	"main-course": "orange",
+	"dessert": "pink",
+	"drink": "teal"
+};
+
+// Difficulty levels with colors and icons
+export const difficultyConfig: Record<string, { color: string; icon: string }> = {
+	"Easy": { color: "green", icon: "leaf.fill" },
+	"Medium": { color: "orange", icon: "flame.fill" },
+	"Hard": { color: "red", icon: "bolt.fill" }
+};
+
 export interface Recipe {
 	id: number;
 	title: string;

@@ -2,6 +2,7 @@
 	import { recipes, appFeatures, recipeTypes, type RecipeType } from '$lib/data';
 	import { filterRecipes, type RecipeFilters } from '$lib/recipeFilters';
 	import RecipeCard from './RecipeCard.swiftui.svelte';
+	import RecipeCardHero from './RecipeCardHero.swiftui.svelte';
 
 	let searchText = $state('');
 	let selectedType = $state<RecipeType | 'all'>('all');
@@ -53,8 +54,12 @@
 			{/if}
 
 			<!-- Recipe Cards -->
-			{#each filteredResult.recipes as recipe}
-				<RecipeCard {recipe} />
+			{#each filteredResult.recipes as recipe, index}
+				{#if index === 0 && !hasActiveFilters}
+					<RecipeCardHero {recipe} />
+				{:else}
+					<RecipeCard {recipe} />
+				{/if}
 			{/each}
 
 			<!-- No Results -->

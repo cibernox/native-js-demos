@@ -1,12 +1,16 @@
 <script lang="ts">
 	import type { Recipe } from '$lib/data';
-	import { recipeTypes } from '$lib/data';
+	import { recipeTypes, recipeTypeColors, difficultyConfig } from '$lib/data';
 
 	interface Props {
 		recipe: Recipe;
 	}
 
 	let { recipe }: Props = $props();
+
+	const typeColor = $derived(recipeTypeColors[recipe.type]);
+	const typeLabel = $derived(recipeTypes.find(t => t.value === recipe.type)?.label || recipe.type);
+	const difficulty = $derived(difficultyConfig[recipe.difficulty] || { color: "gray", icon: "star" });
 </script>
 
 <vstack spacing="0" modifiers="background(.background);cornerRadius(12);shadow(.drop(radius: 2, x: 0, y: 1));marginBottom(16);">
@@ -18,8 +22,8 @@
 	<!-- Recipe Content -->
 	<vstack alignment="leading" spacing="8" modifiers="padding(16);">
 		<!-- Recipe Type Badge -->
-		<text modifiers="padding(.horizontal, 8);padding(.vertical, 4);background(.blue.opacity(0.1));cornerRadius(6);font(.caption);fontWeight(.medium);foregroundColor(.blue);">
-			{recipeTypes.find(t => t.value === recipe.type)?.label || recipe.type}
+		<text modifiers="padding(.horizontal, 8);padding(.vertical, 4);background(.{typeColor}.opacity(0.1), in: .rect(cornerRadius: 6));font(.caption);fontWeight(.medium);foregroundColor(.{typeColor});">
+			{typeLabel}
 		</text>
 
 		<hstack alignment="top">
@@ -45,10 +49,10 @@
 				</hstack>
 			</label>
 
-			<label modifiers="padding(.horizontal, 8);padding(.vertical, 4);background(.blue.opacity(0.1));cornerRadius(6);">
+			<label modifiers="padding(.horizontal, 8);padding(.vertical, 4);background(.{difficulty.color}.opacity(0.1), in: .rect(cornerRadius: 6));">
 				<hstack spacing="4">
-					<image systemname="star" modifiers="font(.caption);foregroundColor(.blue);" />
-					<text modifiers="font(.caption);fontWeight(.medium);foregroundColor(.blue);">
+					<image systemname="{difficulty.icon}" modifiers="font(.caption);foregroundColor(.{difficulty.color});" />
+					<text modifiers="font(.caption);fontWeight(.medium);foregroundColor(.{difficulty.color});">
 						{recipe.difficulty}
 					</text>
 				</hstack>
@@ -69,7 +73,7 @@
 			<vstack alignment="leading" spacing="6">
 				<hstack spacing="6" modifiers="frame(maxWidth: .infinity, alignment: .leading);">
 					{#each recipe.ingredients.slice(0, 4) as ingredient}
-						<text modifiers="padding(.horizontal, 7);padding(.vertical, 6);background(.blue.opacity(0.2), in: .capsule);overlay(.capsule.stroke(.blue, lineWidth: 1));font(.caption);fontWeight(.medium);foregroundColor(.blue);">
+						<text modifiers="padding(.horizontal, 7);padding(.vertical, 6);background(.{typeColor}.opacity(0.2), in: .capsule);overlay(.capsule.stroke(.{typeColor}, lineWidth: 1));font(.caption);fontWeight(.medium);foregroundColor(.{typeColor});">
 							{ingredient}
 						</text>
 					{/each}
@@ -78,7 +82,7 @@
 				{#if recipe.ingredients.length > 4}
 					<hstack spacing="6">
 						{#each recipe.ingredients.slice(4, 8) as ingredient}
-							<text modifiers="padding(.horizontal, 7);padding(.vertical, 6);background(.blue.opacity(0.2), in: .capsule);overlay(.capsule.stroke(.blue, lineWidth: 1));font(.caption);fontWeight(.medium);foregroundColor(.blue);">
+							<text modifiers="padding(.horizontal, 7);padding(.vertical, 6);background(.{typeColor}.opacity(0.2), in: .capsule);overlay(.capsule.stroke(.{typeColor}, lineWidth: 1));font(.caption);fontWeight(.medium);foregroundColor(.{typeColor});">
 								{ingredient}
 							</text>
 						{/each}
@@ -88,7 +92,7 @@
 				{#if recipe.ingredients.length > 8}
 					<hstack spacing="6" modifiers="frame(maxWidth: .infinity, alignment: .leading);">
 						{#each recipe.ingredients.slice(8) as ingredient}
-							<text modifiers="padding(.horizontal, 7);padding(.vertical, 6);background(.blue.opacity(0.2), in: .capsule);overlay(.capsule.stroke(.blue, lineWidth: 1));font(.caption);fontWeight(.medium);foregroundColor(.blue);">
+							<text modifiers="padding(.horizontal, 7);padding(.vertical, 6);background(.{typeColor}.opacity(0.2), in: .capsule);overlay(.capsule.stroke(.{typeColor}, lineWidth: 1));font(.caption);fontWeight(.medium);foregroundColor(.{typeColor});">
 								{ingredient}
 							</text>
 						{/each}
